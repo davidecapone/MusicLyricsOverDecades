@@ -16,7 +16,10 @@ library("dplyr")
 ```
 
 ```{r}
-dataset <- read.csv("tcc_ceds_music.csv")
-View(dataset)
+dataset <- read.csv("./datasets/tcc_ceds_music.csv")
+
+tidy_dataset <- dataset %>% select(release_date, genre, artist_name, track_name, lyrics)
+write.csv(tidy_dataset, "./datasets/tcc_ceds_music_tidy.csv", row.names = TRUE)
+
 ```
 
