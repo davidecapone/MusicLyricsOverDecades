@@ -6,7 +6,7 @@ La musica può diventare un vero e proprio riflesso della società: è quindi po
 
 **Cosa possiamo aspettarci dal futuro**? La musica è veramente in evoluzione oppure esistono delle ciclicità?
 
-Ho preso in considerazione una grossa fetta di storia (ovvero dal `1970 - 2020`).
+Ho preso in considerazione una grossa fetta di storia (ovvero dal `1950 - 2019`).
 
 Un periodo significativo poichè si sono susseguiti una sostanziale molteplicità di generi. 
 

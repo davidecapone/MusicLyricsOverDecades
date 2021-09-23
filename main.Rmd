@@ -9,23 +9,42 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
 ```{r}
 library("dplyr")
-
+library("ggplot2")
+library("tidyverse")
+library("tidytext")
 ```
 
+
 ```{r}
+# Import
 dataset <- read.csv("./datasets/tcc_ceds_music.csv")
 
-tidy_dataset <- dataset %>% select(release_date, genre, artist_name, track_name, lyrics)
-write.csv(tidy_dataset, "./datasets/tcc_ceds_music_tidy.csv", row.names = TRUE)
 
-```
-```{r}
-dataset <- read.csv("./datasets/spotify_songs.csv")
 View(dataset)
+# Tidy
+tidy_dataset <- dataset %>% 
+  select(artist_name, 
+         track_name, 
+         release_date, 
+         genre, 
+         lyrics, 
+         len)
 
-tidy_dataset <- dataset %>% select(track_artist, track_name, track_album_release_date, playlist_genre, playlist_subgenre, lyrics, track_popularity)
+
 View(tidy_dataset)
+write.csv(tidy_dataset, "./datasets/tcc_ceds_music_tidy.csv", row.names = TRUE)
 ```
+
+
+```{r}
+# Analisi preliminare
+# - La quantità di canzoni rilasciate può definirsi in crescita?
+
+
+
+
+  
+```
+
