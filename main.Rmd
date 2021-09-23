@@ -22,4 +22,10 @@ tidy_dataset <- dataset %>% select(release_date, genre, artist_name, track_name,
 write.csv(tidy_dataset, "./datasets/tcc_ceds_music_tidy.csv", row.names = TRUE)
 
 ```
+```{r}
+dataset <- read.csv("./datasets/spotify_songs.csv")
+View(dataset)
 
+tidy_dataset <- dataset %>% select(track_artist, track_name, track_album_release_date, playlist_genre, playlist_subgenre, lyrics, track_popularity)
+View(tidy_dataset)
+```
