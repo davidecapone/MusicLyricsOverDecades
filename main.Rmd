@@ -14,16 +14,14 @@ library("dplyr")
 library("ggplot2")
 library("tidyverse")
 library("tidytext")
+
 ```
 
-
 ```{r}
-# Import
+# Import original dataset
 dataset <- read.csv("./datasets/tcc_ceds_music.csv")
 
-
-View(dataset)
-# Tidy
+# Tidying
 tidy_dataset <- dataset %>% 
   select(artist_name, 
          track_name, 
@@ -32,19 +30,34 @@ tidy_dataset <- dataset %>%
          lyrics, 
          len)
 
+# add coloumn 'decade' to perform analysis
+tidy_dataset <- tidy_dataset %>% 
+  mutate(decade =
+    case_when(
+      2010 <= release_date ~ "10-20",
+      2000 <= release_date ~ "00-10",
+      1990 <= release_date ~ "90-00",
+      1980 <= release_date ~ "80-90",
+      1970 <= release_date ~ "70-80",
+      1960 <= release_date ~ "60-70",
+      release_date < 1960 ~ "50-60"
+    )
+  )
 
-View(tidy_dataset)
+# ... save
 write.csv(tidy_dataset, "./datasets/tcc_ceds_music_tidy.csv", row.names = TRUE)
-```
 
+```
 
 ```{r}
-# Analisi preliminare
-# - La quantità di canzoni rilasciate può definirsi in crescita?
-
-
-
-
+# Import tidy dataset
+tidy_dataset <- data.frame(read.csv("./datasets/tcc_ceds_music_tidy.csv"))
   
 ```
+
+```{r}
+# - Sentiment Analysis
+
+```
+
 
