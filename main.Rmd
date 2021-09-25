@@ -58,6 +58,36 @@ tidy_dataset <- data.frame(read.csv("./datasets/tcc_ceds_music_tidy.csv"))
 ```{r}
 # - Sentiment Analysis
 
+from_1950_60 <- tidy_dataset %>% 
+  select(lyrics) %>% 
+  filter(tidy_dataset$decade == "50-60")
+
+from_1950_60 <- tibble(text = from_1950_60)
+
+# unnest_tokens, dataframe to vector
+from_1950_60 <- from_1950_60 %>% 
+  mutate_all(as.character) %>% 
+  unnest_tokens(word, text)
+
+from_1950_60 %>%
+  count(word, sort = TRUE) 
+
+from_1950_60 %>%
+  count(word, sort = TRUE) %>%
+  filter(n >= 1000000) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word))
+
+nrc_joy <- get_sentiments("nrc") %>% 
+  filter(sentiment == "joy")
+
+from_1950_60 %>%
+  inner_join(nrc_joy) %>%
+  count(word, sort = TRUE) %>%
+  filter(n >= 249560) %>%
+  ggplot(aes(n, word)) +
+  geom_col() +
+  labs(y = NULL)
 ```
 
 
