@@ -56,41 +56,65 @@ tidy_dataset <- data.frame(read.csv("./datasets/tcc_ceds_music_tidy.csv"))
 ```
 
 ```{r}
-# - Sentiment Analysis
-# text --> unnest_tokens --> tidy text --> summarized text --> ggplot (visualization)
+# - 
+decades <- c("10-20", "00-10", "90-00", "80-90", "70-80", "60-70", "50-60")
 
-# One token per row: in this case token is a single word
+# foreach decade i save their correspondents unigrams, bigrams, trigrams
 
-text_df <- tidy_dataset %>% 
-  select(lyrics) %>% 
-  filter(tidy_dataset$decade == "50-60")
-
-tokens <- text_df %>%
-  unnest_tokens(unigram, lyrics) %>% 
-  count(unigram, sort = TRUE)
-
-tokens <- text_df %>%
-  unnest_tokens(bigram, lyrics, token = "ngrams", n = 2) %>% 
-  count(bigram, sort = TRUE)
-
-tokens <- text_df %>%
-  unnest_tokens(trigram, lyrics, token = "ngrams", n = 3) %>% 
-  count(trigram, sort = TRUE)
-
-saveUnigramCSV(tidy_dataset, "50-60", 1);
+unigrams_per_decade <- tidy_dataset %>%
+  select(lyrics, decade) %>%
+  group_by(decade) %>% 
+  unnest_tokens(word, lyrics) %>% 
+  count(word, sort = TRUE)
 
 
-saveNgramCSV <- function (dataset, decade, n) {
-  dataset <- dataset %>% 
+nrc_joy <- get_sentiments("nrc") %>% 
+  filter(sentiment == "joy")
+
+unigrams_per_decade %>%
+  filter(decade == "10-20") %>% 
+  inner_join(nrc_joy) %>%
+  count(word, sort = TRUE)
+
+
+
+
+
+for (decade in decades) {
+  ds <- tidy_dataset %>% 
     select(lyrics) %>% 
-    filter(dataset$decade == "50-60")
+    filter(tidy_dataset$decade == decade)
   
-  tokens <- dataset %>%
-    unnest_tokens(token, lyrics, token = "ngrams", n = 1) %>% 
-    count(token, sort = TRUE)
+  unigram <- ds %>%
+    unnest_tokens(word, lyrics) %>% 
+    count(word, sort = TRUE)
   
-  write.csv(tokens, "./datasets/tokens/50_60.csv", row.names = TRUE)
+  bigram <- ds %>%
+    unnest_tokens(word, lyrics, token = "ngrams", n = 2) %>% 
+    count(word, sort = TRUE)
+  
+  trigram <- ds %>%
+    unnest_tokens(word, lyrics, token = "ngrams", n = 3) %>% 
+    count(word, sort = TRUE)
+  
+  write.csv(unigram, paste("./datasets/tokens/unigrams/",decade,".csv"), row.names = TRUE)
+  write.csv(bigram, paste("./datasets/tokens/bigrams/",decade,".csv"), row.names = TRUE)
+  write.csv(trigram, paste("./datasets/tokens/trigrams/",decade,".csv"), row.names = TRUE)
 }
+
+
+d50_60 <- data.frame(read.csv("./datasets/tokens/unigrams/ 50-60 .csv"))
+d70_80 <- data.frame(read.csv("./datasets/tokens/unigrams/ 70-80 .csv"))
+d80_90 <- data.frame(read.csv("./datasets/tokens/unigrams/ 80-90 .csv"))
+d90_00 <- data.frame(read.csv("./datasets/tokens/unigrams/ 90-00 .csv"))
+
+nrc_joy <- get_sentiments("nrc") %>% 
+  filter(sentiment == "joy")
+
+d80_90 %>%
+  select(word) %>%
+  inner_join(nrc_joy) %>%
+  count(word, sort = TRUE)
 
 
 ```
