@@ -4,7 +4,7 @@
 
 La musica può diventare un vero e proprio riflesso della società: è quindi possibile che **eventi esterni possano condizionare i gusti e lo stile** con cui certi testi vengono scritti?
 
-**Cosa possiamo aspettarci dal futuro**? La musica è veramente in evoluzione oppure esistono delle ciclicità?
+**Cosa possiamo aspettarci dal futuro**? La musica è in continua evoluzione oppure esistono delle ciclicità?
 
 Ho preso in considerazione una grossa fetta di storia (ovvero dal `1950 - 2019`).
 

@@ -69,52 +69,13 @@ unigrams_per_decade <- tidy_dataset %>%
 
 
 nrc_joy <- get_sentiments("nrc") %>% 
-  filter(sentiment == "joy")
+  filter(sentiment == "negative")
 
 unigrams_per_decade %>%
-  filter(decade == "10-20") %>% 
   inner_join(nrc_joy) %>%
-  count(word, sort = TRUE)
+  count(word)
 
 
-
-
-
-for (decade in decades) {
-  ds <- tidy_dataset %>% 
-    select(lyrics) %>% 
-    filter(tidy_dataset$decade == decade)
-  
-  unigram <- ds %>%
-    unnest_tokens(word, lyrics) %>% 
-    count(word, sort = TRUE)
-  
-  bigram <- ds %>%
-    unnest_tokens(word, lyrics, token = "ngrams", n = 2) %>% 
-    count(word, sort = TRUE)
-  
-  trigram <- ds %>%
-    unnest_tokens(word, lyrics, token = "ngrams", n = 3) %>% 
-    count(word, sort = TRUE)
-  
-  write.csv(unigram, paste("./datasets/tokens/unigrams/",decade,".csv"), row.names = TRUE)
-  write.csv(bigram, paste("./datasets/tokens/bigrams/",decade,".csv"), row.names = TRUE)
-  write.csv(trigram, paste("./datasets/tokens/trigrams/",decade,".csv"), row.names = TRUE)
-}
-
-
-d50_60 <- data.frame(read.csv("./datasets/tokens/unigrams/ 50-60 .csv"))
-d70_80 <- data.frame(read.csv("./datasets/tokens/unigrams/ 70-80 .csv"))
-d80_90 <- data.frame(read.csv("./datasets/tokens/unigrams/ 80-90 .csv"))
-d90_00 <- data.frame(read.csv("./datasets/tokens/unigrams/ 90-00 .csv"))
-
-nrc_joy <- get_sentiments("nrc") %>% 
-  filter(sentiment == "joy")
-
-d80_90 %>%
-  select(word) %>%
-  inner_join(nrc_joy) %>%
-  count(word, sort = TRUE)
 
 
 ```
