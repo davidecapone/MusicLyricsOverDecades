@@ -1,26 +1,16 @@
 # Music Decades Analysis
 
 ## Obiettivi
+Analizzare come è cambiato il sentiment delle canzoni 
 
-La musica può diventare un vero e proprio riflesso della società: è quindi possibile che **eventi esterni possano condizionare i gusti e lo stile** con cui certi testi vengono scritti?
+## Risorse
+- https://www.kaggle.com/datasets/terminate9298/songs-lyrics?select=songs_details.csv
 
-**Cosa possiamo aspettarci dal futuro**? La musica è in continua evoluzione oppure esistono delle ciclicità?
 
-Ho preso in considerazione una grossa fetta di storia (ovvero dal `1950 - 2019`).
+## Dataset
+Descrizione del dataset
 
-Un periodo significativo poichè si sono susseguiti una sostanziale molteplicità di generi. 
-
-Molto spesso le **tendenze sono cambiate radicalmente e in maniera repentina**...
-
-## Step di analisi
-
-### 1. Analisi preliminare
-* La quantità di canzoni rilasciate può definirsi in crescita rispetto al passato?
-* Quali sono i generi prevalenti per anno?
-* Quale genere è rimasto più frequente per più tempo?
-* Quale genere lo è stato per meno tempo?
-* La quantità di generi/sottogeneri è aumentato?
-
+## Domande
 ### 2. Sentiment analysis
 * Com'è è variato il sentiment sui testi delle canzoni negli anni
 * Il cambiamento di sentiment è attribuibile a particolari eventi esterni?
@@ -33,3 +23,6 @@ Molto spesso le **tendenze sono cambiate radicalmente e in maniera repentina**..
 ### 4. Topic Modelling
 * Argomenti più frequenti in base agli anni
 * Eventi esterni hanno influenzato questi argomenti?
+
+
+
