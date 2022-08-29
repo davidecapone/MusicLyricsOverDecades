@@ -1,5 +1,4 @@
-## Music Lyrics over Decades: 
-### a NLP study 
+## Music Lyrics over Decades
 
 * Scaricare i dataset da Kaggle:
 https://www.kaggle.com/datasets/terminate9298/songs-lyrics
