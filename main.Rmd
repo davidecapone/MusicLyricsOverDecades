@@ -92,19 +92,18 @@ write.csv(unigrams_decade, file = "./data/unigrams_decade.csv")
 ```
 
 ```{r merge-with-english-dict}
-# voglio mantenere tutti i token che hanno una corrispondenza nel vocabolario inglese
-# trim sul file per eliminare gli spazi
+# voglio mantenere tutti i token che hanno una corrispondenza nel vocabolario inglese (merged.csv)
+# trim sul file per eliminare gli spazi (necessario: creavano problemi)
 word_list = read.csv("./data/merged.csv")
 word_list$word = str_trim(word_list$word)
 
 unigrams_decade = read.csv("./data/unigrams_decade.csv")
-
 unigrams_decade = unigrams_decade %>% filter(word %in% word_list$word)
 write.csv(unigrams_decade, file = "./data/unigrams_decade.csv")
 ```
 
 ```{r lexicons}
-# sentiment analysis per decade, utilizzando bing, afinn, nrc
+# sentiment analysis per decade, utilizzando bing, afinn, nrc:
 unigrams_decade_bing <- unigrams_decade %>%
   inner_join(get_sentiments("bing"))
 
@@ -114,6 +113,7 @@ unigrams_decade_afinn <- unigrams_decade %>%
 unigrams_decade_nrc <- unigrams_decade %>%
   inner_join(get_sentiments("nrc"))
 
+# salvataggio files
 write.csv(unigrams_decade_bing, file = "./data/BING_unigrams_decade.csv")
 write.csv(unigrams_decade_afinn, file = "./data/AFINN_unigrams_decade.csv")
 write.csv(unigrams_decade_nrc, file = "./data/NRC_unigrams_decade.csv")
@@ -149,10 +149,6 @@ graph = bing_freq %>%
 
 print(graph)
 ggsave(graph, filename = "./graphs/BING_lex_decade.png", device = "png")
-
-# il sentiment negativo risulta essere inferiore a quello positivo fino alla fine degli anni '70
-# avviene poi un inversione del trend: a partire dal nuovo millennio, il sentiment negativo risulta essere prevalente su quello positivo
-# interessante notare come nelle decadi 70-80-90 i due sentiment siano bilanciati.
 ```
 
 ```{r wordclouds}
@@ -207,6 +203,7 @@ unigrams_decade_bing %>%
 ```
 
 ```{r sentiment-trends}
+# utilizziamo NRC per plottare le tipologie di sentiment nel tempo
 unigrams_decade_nrc %>% 
   group_by(decade, sentiment) %>% 
   summarise(freq = sum(n)/total) %>% 
@@ -217,8 +214,6 @@ unigrams_decade_nrc %>%
   theme(legend.position="bottom") + 
   labs(x = element_blank(), 
        y = element_blank())
-    
-  
 ```
 
 
@@ -275,14 +270,11 @@ freq_by_rank %>%
     plot.caption= element_text(size=5, vjust = 10)
   ) + 
   labs(y = "Term Frequency",x = "Rank") + theme_minimal()
-
-# il grafico ricorda una distribuzione classica della legge di Zipf
-# poche parole vengono ripetute molte volte per tutte e 7 le decadi e molte parole vengono ripetute poche volte
-# lo scostamento nella parte bassa, rispetto alla curva teorica, è dovuto probabilmente alla rimozione delle stop words
 ```
 
 
 ```{r top-five-occurences, fig.width=9, fig.height=7}
+# Top 5 parole più usate
 unigrams_decade %>%
   group_by(decade) %>%
   arrange(desc(n)) %>% 
@@ -296,7 +288,7 @@ unigrams_decade %>%
 
 
 ```{r tf-idf, fig.width=8, fig.height=3}
-# tf-idf
+# tf-idf (DOCUMENTI = decadi)
 unigrams_decade = read.csv("./data/unigrams_decade.csv")
 
 unigrams_total_words <- unigrams_decade %>% 
@@ -310,6 +302,9 @@ unigrams_decade_tf_idf = unigrams_decade %>%
 
 tf_labs = labs(x = element_blank(), y = element_blank())
 
+
+#Faccio due grafici separati (questioni stilistiche)
+# tf-idf dal '50 al '80
 unigrams_decade_tf_idf %>%
   filter(decade %in% c("1950-1960", "1960-1970", "1970-1980")) %>% 
   group_by(decade) %>%
@@ -324,7 +319,7 @@ unigrams_decade_tf_idf %>%
     axis.text.y = element_text(size=8, face = "bold"),
   ) + tf_labs
 
-
+# tf-idf dal '80 al '020
 unigrams_decade_tf_idf %>%
   filter(decade %in% c("1980-1990", "1990-2000", "2000-2010", "2010-2020")) %>% 
   group_by(decade) %>%
@@ -339,9 +334,6 @@ unigrams_decade_tf_idf %>%
     axis.text.y = element_text(size=8, face = "bold"),
   ) + tf_labs + 
   scale_fill_manual(values=c("#BB7539", "#5987C5", "#AE71A5", "#344B47"))
-
-# La decade 1980-1990 è contraddistinta da parole francesi:
-# da uno studio sul web ho imparato che in quella decade spopola il pop francese
 ```
 
 
@@ -493,5 +485,7 @@ uni80_90
 uni90_00
 uni00_10
 uni10_20
+
+# solo alcune decadi presentano risultati significativi
 ```
 

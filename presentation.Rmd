@@ -113,6 +113,7 @@ library(ggplot2)
 *2010-2020 topics*
 ![](./graphs/topic_modelling/topic_modelling_10-20.png){width=100%, height=100%}
 
+
 * One of the topics is related to crazy parties
 * The other one is related to exterior style and appereance
 
